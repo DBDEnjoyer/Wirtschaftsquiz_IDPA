@@ -71,36 +71,38 @@ Ein Quiz kann erstellt, gespeichert und an Lernende weitergegeben werden. Nach A
 
 ### 3.1 Grundsätzliche Entscheidungen
 
-- **Programmiersprache:**  
+ **Programmiersprache:**  
   Das Projekt wird in **Python** umgesetzt, da es einfach zu lesen ist, gute Bibliotheken für GUIs (z. B. *tkinter*) und Datenverwaltung (z. B. *json*) bietet.
 
-- **Benutzeroberfläche (GUI):**  
+ **Benutzeroberfläche (GUI):**  
   Die GUI wird mit **tkinter** erstellt. Diese Bibliothek ist plattformunabhängig, leichtgewichtig und ideal für Lernprojekte geeignet.  
   Ziel ist eine **klare und strukturierte Darstellung** mit Buttons, Menüs und Textfeldern.
 
-- **Datenverwaltung:**  
+**Datenverwaltung:**  
   Fragen, Themen und Quizze werden in **JSON-Dateien** gespeichert.  
   JSON ist leicht editierbar, wodurch Lehrpersonen direkt im Dateisystem Fragen ergänzen oder ändern können.
 
-- **Fragetypen:**  
+**Fragetypen:**  
   Das System unterstützt mehrere Typen:
   - *Multiple Choice*  
   - *Richtig/Falsch*  
   - *Freitext-Eingaben*  
 
-- **Rollen & Berechtigungen:**  
+ **Rollen & Berechtigungen:**  
   - *Lernende* können Quiz starten und Fragen beantworten.  
   - *Lehrpersonen* können Fragen und Themen verwalten (Hinzufügen, Ändern, Löschen).  
 
-- **Zielsystem:**  
+ **Zielsystem:**  
   Die Anwendung ist als **Offline-Desktop-App** konzipiert (Windows / macOS / Linux).
 
-- **Designprinzipien:**  
+ **Designprinzipien:**  
   - Einfache Navigation und verständliche Benutzerführung.  
   - Übersichtliche Darstellung der Fragen.  
   - Sofortige Rückmeldung nach Abschluss des Quiz (richtige/falsche Antworten).  
   - Klare Trennung zwischen Lernenden- und Lehrpersonen-Bereich.
 
 ---
+
+Abbildung 1: Mockup des GUI-Entwurfs
 
 <img width="1521" height="662" alt="image" src="https://github.com/user-attachments/assets/10859e27-8337-468f-b311-471e15ac448e" />
