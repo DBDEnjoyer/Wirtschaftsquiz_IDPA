@@ -9,11 +9,7 @@
 | ---------- | ------- | ---------------- |
 | 29.10.2025 | 0.0.1   | Projektidee und Anforderungen festgelegt |
 | 29.10.2025 | 0.0.2   | Erste User Stories formuliert |
-| 05.11.2025 | 0.1.0   | Testfälle erstellt und Planungsphase begonnen |
-| 12.11.2025 | 0.2.0   | Grundstruktur und GUI-Entwurf erstellt |
-| 26.11.2025 | 0.3.0   | Fragenverwaltung und Auswertung programmiert |
-| 10.12.2025 | 0.8.0   | Fehlerbehebung, Tests und Feinschliff |
-| 13.01.2026 | 1.0.0   | Projekt fertiggestellt und abgegeben |
+
 
 ---
 
@@ -69,4 +65,40 @@ Ein Quiz kann erstellt, gespeichert und an Lernende weitergegeben werden. Nach A
 **Total:** ca. 12 Arbeitspakete ≈ 18 Stunden
 
 ---
+## 3 Entscheiden
 
+### 3.1 Grundsätzliche Entscheidungen
+
+- **Programmiersprache:**  
+  Das Projekt wird in **Python** umgesetzt, da es einfach zu lesen ist, gute Bibliotheken für GUIs (z. B. *tkinter*) und Datenverwaltung (z. B. *json*) bietet.
+
+- **Benutzeroberfläche (GUI):**  
+  Die GUI wird mit **tkinter** erstellt. Diese Bibliothek ist plattformunabhängig, leichtgewichtig und ideal für Lernprojekte geeignet.  
+  Ziel ist eine **klare und strukturierte Darstellung** mit Buttons, Menüs und Textfeldern.
+
+- **Datenverwaltung:**  
+  Fragen, Themen und Quizze werden in **JSON-Dateien** gespeichert.  
+  JSON ist leicht editierbar, wodurch Lehrpersonen direkt im Dateisystem Fragen ergänzen oder ändern können.
+
+- **Fragetypen:**  
+  Das System unterstützt mehrere Typen:
+  - *Multiple Choice*  
+  - *Richtig/Falsch*  
+  - *Freitext-Eingaben*  
+
+- **Rollen & Berechtigungen:**  
+  - *Lernende* können Quiz starten und Fragen beantworten.  
+  - *Lehrpersonen* können Fragen und Themen verwalten (Hinzufügen, Ändern, Löschen).  
+
+- **Zielsystem:**  
+  Die Anwendung ist als **Offline-Desktop-App** konzipiert (Windows / macOS / Linux).
+
+- **Designprinzipien:**  
+  - Einfache Navigation und verständliche Benutzerführung.  
+  - Übersichtliche Darstellung der Fragen.  
+  - Sofortige Rückmeldung nach Abschluss des Quiz (richtige/falsche Antworten).  
+  - Klare Trennung zwischen Lernenden- und Lehrpersonen-Bereich.
+
+---
+
+<img width="1521" height="662" alt="image" src="https://github.com/user-attachments/assets/10859e27-8337-468f-b311-471e15ac448e" />
