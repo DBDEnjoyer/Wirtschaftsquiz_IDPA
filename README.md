@@ -10,6 +10,8 @@
 | 29.10.2025 | 0.0.1   | Projektidee und Anforderungen festgelegt |
 | 29.10.2025 | 0.0.2   | Erste User Stories formuliert |
 | 05.11.2025 | 0.1.0   | Planen, Diagramme und Codegrundlagen  |
+| 12.11.2025 | 0.2.0   |Implementierung der Logik, Frageverwaltung und Lösungsausgabe abgeschlossen |
+
 
 
 
