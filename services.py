@@ -40,7 +40,14 @@ class QuizService:
         }
         if self.quiz.show_solutions:
             res["solutions"] = [
-                {"id": q.id, "text": q.text, "type": q.type, "answer": q.answer, "topic": q.topic}
-                for q in self.quiz.questions
-            ]
+    {
+        "id": q.id,
+        "text": q.text,
+        "type": q.type,
+        "answer": q.answer,
+        "topic": q.topic,
+        "options": q.options,
+    }
+    for q in self.quiz.questions
+]
         return res
