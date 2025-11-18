@@ -448,14 +448,34 @@ class ResultPage(ttk.Frame):
         for s in res.get("solutions", []):
             solutions_by_id[s["id"]] = s
 
-        for a in res["answers"]:
-            qid = a["id"]
-            ok = a["ok"]
-            sol = solutions_by_id.get(qid)
-            frage_text = sol["text"] if sol else qid
-            korrekt = "Ja" if ok else "Nein"
-            gegeben = str(a["given"])
-            self.tree.insert("", "end", values=(frage_text, korrekt, gegeben))
+for a in res["answers"]:
+    qid = a["id"]
+    ok = a["ok"]
+    given = a["given"]
+    sol = solutions_by_id.get(qid)
+
+    frage_text = sol["text"] if sol else qid
+    korrekt = "Ja" if ok else "Nein"
+
+    if sol and sol["type"] == "mc":
+        options = sol.get("options") or []
+        
+        correct_idx = sol["answer"]
+        correct_txt = options[correct_idx] if isinstance(correct_idx, int) and 0 <= correct_idx < len(options) else str(correct_idx)
+        
+        if isinstance(given, int) and 0 <= given < len(options):
+            given_txt = options[given]
+        else:
+            given_txt = str(given)
+    elif sol and sol["type"] == "tf":
+        correct_txt = "Richtig" if sol["answer"] else "Falsch"
+        given_txt = "Richtig" if bool(given) else "Falsch"
+    else:  # Textfrage
+        correct_txt = str(sol["answer"]) if sol else ""
+        given_txt = str(given)
+
+
+    self.tree.insert("", "end", values=(frage_text, korrekt, given_txt))
 
 
 # ---------- Fragenverwaltung ----------
