@@ -669,21 +669,32 @@ class QuestionDialog(tk.Toplevel):
         answer = None
 
         try:
-            if qtype == "mc":
-                options = [o.strip() for o in options_text.split(";") if o.strip()]
-                if len(options) < 2:
-                    raise ValueError("Für MC-Fragen sind mindestens 2 Optionen nötig.")
-                answer = int(answer_text)
-                if not (0 <= answer < len(options)):
-                    raise ValueError("Antwortindex liegt außerhalb des gültigen Bereichs.")
+       if qtype == "mc":
+    options = [o.strip() for o in options_text.split(";") if o.strip()]
+    if len(options) < 2:
+        raise ValueError("Für MC-Fragen sind mindestens 2 Optionen nötig.")
+
+    
+    if answer_text.isdigit():
+        answer = int(answer_text)
+        if not (0 <= answer < len(options)):
+            raise ValueError("Antwortindex liegt außerhalb des gültigen Bereichs.")
+    else:
+        
+        try:
+            answer = options.index(answer_text.strip())
+        except ValueError:
+            raise ValueError("Die korrekte Antwort muss entweder ein gültiger Index "
+                             "oder exakt eine der angegebenen Optionen sein.")
+
             elif qtype == "tf":
                 if answer_text.lower() not in ("t", "f", "true", "false", "wahr", "falsch"):
                     raise ValueError("Für TF-Fragen bitte 't'/'f' oder 'true'/'false' angeben.")
                 answer = answer_text.lower() in ("t", "true", "wahr")
-            else:  # text
-                if not answer_text:
-                    raise ValueError("Für Textfragen wird eine Musterlösung benötigt.")
-                answer = answer_text
+                else:  # text
+        if not answer_text:
+            raise ValueError("Für Textfragen wird eine Musterlösung benötigt.")
+        answer = answer_text
         except ValueError as e:
             messagebox.showerror("Fehler", str(e))
             return
