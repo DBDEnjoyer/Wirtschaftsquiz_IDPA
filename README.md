@@ -13,6 +13,8 @@
 | 12.11.2025 | 0.2.0   |Implementierung der Logik, Frageverwaltung und Lösungsausgabe abgeschlossen |
 | 19.11.2025 | 0.3.0   |Implementierung der GUI Testen und respektives BUGfixen|
 | 26.11.2025 | 0.4.0   |Testen und respektives BUGfixen|
+| 2.12.2025 | 0.9.0   |Testphase abgeschlossen, Präsentation gestartet und Dokumentation überarbeitet|
+
 
 
 
