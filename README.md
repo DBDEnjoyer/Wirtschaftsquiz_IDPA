@@ -113,3 +113,64 @@ Ein Quiz kann erstellt, gespeichert und an Lernende weitergegeben werden. Nach A
 Abbildung 1: Mockup des GUI-Entwurfs
 
 <img width="1521" height="662" alt="image" src="https://github.com/user-attachments/assets/10859e27-8337-468f-b311-471e15ac448e" />
+
+
+
+## 4 Realisieren
+
+| AP-№ | Datum | Zuständig | geplante Zeit | tatsächliche Zeit |
+|------|--------|------------|----------------|-------------------|
+| 2.A | 05.11.2025 | Grigioni | 90’ | 100’ |
+| 2.B | 05.11.2025 | Bytyqi | 90’ | 110’ |
+| 2.C | 05.11.2025 | Lai | 90’ | 95’ |
+| 3.A | 12.11.2025 | Grigioni | 90’ | 100’ |
+| 3.B | 12.11.2025 | Bytyqi | 90’ | 105’ |
+| 3.C | 12.11.2025 | Lai | 90’ | 90’ |
+| 4.A | 26.11.2025 | Team | 120’ | 150’ |
+| 5.A | 10.12.2025 | Team | 90’ | 120’ |
+| 6.A | 13.01.2026 | Team | 60’ | 75’ |
+
+**Kommentar:**  
+Einige Arbeitspakete dauerten etwas länger als geplant, da zusätzliche Fehler behoben und die GUI weiter verbessert werden musste. Der Mehraufwand führte jedoch zu einer stabileren und benutzerfreundlicheren Anwendung.
+
+---
+
+## 5 Kontrollieren
+
+### 5.1 Testprotokoll
+
+| TC-№ | Datum | Resultat | Tester |
+|------|--------|----------|--------|
+| 1.1 | 19.11.2025 | OK | Team |
+| 2.1 | 19.11.2025 | OK | Bytyqi |
+| 2.2 | 26.11.2025 | OK | Grigioni |
+| 3.1 | 26.11.2025 | OK | Lai |
+| 3.2 | 26.11.2025 | OK | Team |
+| 4.1 | 02.12.2025 | OK | Bytyqi |
+| 5.1 | 02.12.2025 | OK | Team |
+
+**Fazit:**  
+Alle definierten Testfälle wurden erfolgreich durchgeführt. Fehler in der Multiple-Choice-Auswertung und der Anzeige der Antworten wurden während der Testphase entdeckt und behoben. Das System erfüllt die Muss-Anforderungen aus den User Stories.
+
+### 5.2 Exploratives Testen
+
+| BR-№ | Ausgangslage | Eingabe | Erwartete Ausgabe | Tatsächliche Ausgabe |
+|------|--------------|---------|-------------------|----------------------|
+| I | Quiz läuft | Text statt Auswahl bei MC-Frage | Fehlermeldung | Fehlermeldung wird angezeigt |
+| II | Frage wird erstellt | Leere Felder | Hinweis auf fehlende Eingaben | Warnmeldung erscheint |
+| III | Quiz beendet | Klick auf „Zurück“ | Startseite wird angezeigt | Startseite erscheint korrekt |
+
+---
+
+## 6 Auswerten
+
+**Lernbericht (Zusammenfassung):**
+
+Während des Projekts haben wir gelernt, ein größeres Programm in mehrere Komponenten (GUI, Logik, Datenhaltung) aufzuteilen und diese gezielt miteinander zu verbinden. Besonders wertvoll war die Testphase, da wir dort viele versteckte Fehler gefunden haben, vor allem bei der Auswertung von Multiple-Choice-Antworten und der Darstellung der Resultate.
+
+Die Arbeit im Team war wichtig, um verschiedene Blickwinkel einzubringen: Während ein Teil sich auf die Logik konzentrierte, arbeiteten andere an der Benutzeroberfläche und der Dokumentation. Dadurch konnten Probleme schneller erkannt und gelöst werden.
+
+**Projekt-Repository:**  
+https://github.com/DBDEnjoyer/Wirtschaftsquiz_IDPA
+```
+
