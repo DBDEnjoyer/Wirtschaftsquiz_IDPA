@@ -170,7 +170,5 @@ Während des Projekts haben wir gelernt, ein größeres Programm in mehrere Komp
 
 Die Arbeit im Team war wichtig, um verschiedene Blickwinkel einzubringen: Während ein Teil sich auf die Logik konzentrierte, arbeiteten andere an der Benutzeroberfläche und der Dokumentation. Dadurch konnten Probleme schneller erkannt und gelöst werden.
 
-**Projekt-Repository:**  
-https://github.com/DBDEnjoyer/Wirtschaftsquiz_IDPA
-```
+
 
