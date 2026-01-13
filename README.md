@@ -152,6 +152,17 @@ Abbildung 1: Mockup des GUI-Entwurfs
 
 <img width="1521" height="662" alt="image" src="https://github.com/user-attachments/assets/10859e27-8337-468f-b311-471e15ac448e" />
 
+Abbildung 2: Use-Case-Diagramm
+
+<img width="350" height="655" alt="image" src="https://github.com/user-attachments/assets/ea867c3a-1963-4e3f-95bf-029689d36241" />
+
+Abbildung 3: Klassendiagramm 
+
+<img width="279" height="521" alt="image" src="https://github.com/user-attachments/assets/27f80e86-9de0-4793-b120-ee110d8ef7fb" />
+
+Abbildung 4: Ablaufdiagram
+
+<img width="228" height="547" alt="image" src="https://github.com/user-attachments/assets/5a686c19-c385-48c6-a0a7-689a9b005a7d" />
 
 
 ## 4 Realisieren
