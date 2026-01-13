@@ -32,14 +32,16 @@ Ein Quiz kann erstellt, gespeichert und an Lernende weitergegeben werden. Nach A
 
 ### 1.2 User Stories
 
-| US-№ | Verbindlichkeit | Typ         | Beschreibung |
-| ---- | --------------- | ----------- | ------------ |
-| 1    | Muss            | Funktional  | Als Lernender möchte ich Fragen zu verschiedenen Wirtschaftsthemen beantworten können, um mein Wissen zu testen. |
-| 2    | Muss            | Funktional  | Als Lernender möchte ich nach dem Beantworten die richtigen Antworten sehen, damit ich aus Fehlern lernen kann. |
-| 3    | Muss            | Funktional  | Als Lehrperson möchte ich eigene Fragen und Themen hinzufügen können, damit das Quiz flexibel erweiterbar ist. |
-| 4    | Muss            | Funktional  | Als Lehrperson möchte ich bestehende Fragen bearbeiten oder löschen können, damit der Fragenkatalog aktuell bleibt. |
-| 5    | Kann            | Qualität    | Als Lehrperson möchte ich mehrere Quiz-Themen zusammenstellen können, damit ich gezielte Tests für Lernende vorbereiten kann. |
-| 6    | Kann            | Funktional  | Als Lernender möchte ich mein Ergebnis am Ende sehen, um meinen Lernfortschritt zu erkennen. |
+| US-№ | Verbindlichkeit | Rolle | Beschreibung |
+|------|----------------|-------|---------------|
+| 1 | Muss | **Lernende** | Als Lernende*r möchte ich ein Quiz zu einem ausgewählten Wirtschaftsthema starten können, damit ich meinen Wissensstand überprüfen kann. |
+| 2 | Muss | **Lernende** | Als Lernende*r möchte ich nach jeder Abgabe sehen, ob meine Antwort richtig oder falsch war, damit ich aus Fehlern lernen kann. |
+| 3 | Muss | **Lehrperson** | Als Lehrperson möchte ich neue Fragen mit Thema, Fragetyp und Lösung erfassen können, damit ich den Fragenkatalog erweitern kann. |
+| 4 | Muss | **Lehrperson** | Als Lehrperson möchte ich bestehende Fragen bearbeiten oder löschen können, damit fehlerhafte oder veraltete Inhalte korrigiert werden können. |
+| 5 | Muss | **Lehrperson** | Als Lehrperson möchte ich aus mehreren Themen ein Quiz zusammenstellen und exportieren können, damit ich es an Lernende weitergeben kann. |
+| 6 | Kann | **Lernende** | Als Lernende*r möchte ich ein von der Lehrperson erhaltenes Quiz laden können, damit ich genau dieses Quiz bearbeiten kann. |
+| 7 | Kann | **Lernende** | Als Lernende*r möchte ich am Ende eine Übersicht meiner Antworten und der korrekten Lösungen sehen, damit ich gezielt nachlernen kann. |
+
 
 ### 1.3 Testfälle
 
@@ -107,6 +109,42 @@ Ein Quiz kann erstellt, gespeichert und an Lernende weitergegeben werden. Nach A
   - Übersichtliche Darstellung der Fragen.  
   - Sofortige Rückmeldung nach Abschluss des Quiz (richtige/falsche Antworten).  
   - Klare Trennung zwischen Lernenden- und Lehrpersonen-Bereich.
+  - 
+## 3.2 Vorgehensmodell und Informationsbasis
+
+Zu Beginn des Projekts haben wir uns mit der Aufgabenstellung der IDPA sowie den Anforderungen an ein Lernprogramm auseinandergesetzt.
+Wir haben uns entschieden, nach einem vereinfachten iterativen Vorgehensmodell (ähnlich Scrum) zu arbeiten:
+
+Anforderungen wurden zuerst in User Stories festgehalten
+
+Anschliessend in Arbeitspakete aufgeteilt
+
+Danach schrittweise implementiert und getestet
+
+Dieses Vorgehen war sinnvoll, da wir früh eine lauffähige Version hatten und Fehler (z. B. bei Multiple-Choice oder der GUI) in späteren Iterationen gezielt beheben konnten.
+
+## 3.3 Technische Entscheidungsfindung
+
+Vor der Umsetzung haben wir folgende Optionen verglichen:
+
+Bereich	Mögliche Lösungen	Unsere Entscheidung	Begründung
+Programmiersprache	Python, Java, C#	Python	Einfach lesbar, schnell umsetzbar, gut für GUI & JSON
+GUI	Tkinter, Web-App	Tkinter	Keine Installation im Browser nötig, einfach für Desktop
+Datenspeicherung	Datenbank, CSV, JSON	JSON-Dateien	Leicht verständlich, portabel, ideal für Quiz-Export
+Quiz-Verteilung	Cloud, Server, Dateien	Export/Import (JSON)	Keine Server nötig, trotzdem Quiz verteilbar
+
+Diese Entscheidungen wurden getroffen, weil sie zum Umfang einer Schul-IDPA passen, zuverlässig funktionieren und ohne externe Infrastruktur auskommen.
+
+## 3.4 Entscheidung zur Quiz-Verteilung
+
+Ursprünglich speicherte das System alle Fragen nur lokal.
+Da eine zentrale Cloud-Lösung zu komplex gewesen wäre (Server, Benutzerkonten, Sicherheit), entschieden wir uns für ein Export-/Import-System:
+
+Lehrpersonen können Quizze als Datei exportieren
+
+Lernende können diese Datei laden und bearbeiten
+
+So wird die Anforderung „Quiz an Lernende weitergeben“ technisch sauber erfüllt, ohne unnötige Komplexität.
 
 ---
 
