@@ -234,7 +234,7 @@ Dadurch ist das Quiz **nicht an einen einzelnen Computer gebunden**, sondern kan
   - Übersichtliche Darstellung der Fragen.  
   - Sofortige Rückmeldung nach Abschluss des Quiz (richtige/falsche Antworten).  
   - Klare Trennung zwischen Lernenden- und Lehrpersonen-Bereich.
-  - 
+    
 ## 3.2 Vorgehensmodell und Informationsbasis
 
 Zu Beginn des Projekts haben wir uns mit der Aufgabenstellung der IDPA sowie den Anforderungen an ein Lernprogramm auseinandergesetzt.
@@ -273,6 +273,44 @@ So wird die Anforderung „Quiz an Lernende weitergeben“ technisch sauber erf�
 
 ---
 
+### Design & Dokumentation
+
+Das Design des Wirtschaftsquiz-Systems wurde mit geeigneten Mitteln dokumentiert und nachvollziehbar dargestellt.
+Zur Visualisierung der Benutzerführung wurde ein GUI-Mockup erstellt, welches die wichtigsten Ansichten (Startseite, Quiz, Lehrerbereich, Ergebnisanzeige) sowie die Navigation zwischen ihnen zeigt. Dieses Mockup ermöglicht es, den Ablauf der Anwendung unabhängig vom Code zu verstehen.
+
+Zusätzlich wurde die Systemstruktur durch ein Klassendiagramm und eine Modulübersicht dokumentiert. Die wichtigsten Komponenten (QuizService, Question, Quiz, JSONStorage, GUI-Klassen) sind darin ersichtlich und ihre Beziehungen zueinander klar dargestellt.
+
+Auch ohne formales UML erfüllt die Dokumentation ihren Zweck, da:
+
+- die Modulaufteilung klar sichtbar ist,
+- die Verantwortlichkeiten der Klassen verständlich beschrieben sind,
+- und die Funktionsweise des Systems für Aussenstehende nachvollziehbar bleibt.
+
+
+### ERM / Datenmodell
+
+Für das Wirtschaftsquiz wurde ein vollständiges Datenmodell definiert, das sowohl die fachlichen Objekte als auch ihre Beziehungen abbildet.
+
+Die folgenden Entitäten wurden modelliert:
+
+- Quiz (quiz_id, title, created_at)
+- Question (question_id, topic, type, text, correct_answer)
+- Option (option_id, question_id, option_text)
+- QuizQuestion (Verknüpfung zwischen Quiz und Question)
+
+Damit sind alle fachlich relevanten Datenstrukturen eindeutig definiert.
+
+Die Beziehungen sind korrekt modelliert:
+
+- Ein Quiz enthält mehrere Questions (n:m über QuizQuestion)
+- Eine Question kann mehrere Options besitzen (1:n)
+
+Primärschlüssel (quiz_id, question_id, option_id) und Fremdschlüssel (question_id, quiz_id) sind klar gekennzeichnet und logisch korrekt verwendet.
+
+Die Attributlisten sind vollständig und die Datentypen (z. B. UUID, String, Date) sind definiert, sodass sowohl die Speicherung als auch die Verarbeitung der Daten eindeutig nachvollziehbar ist.
+
+
+
 Abbildung 1: Mockup des GUI-Entwurfs
 
 <img width="1521" height="662" alt="image" src="https://github.com/user-attachments/assets/10859e27-8337-468f-b311-471e15ac448e" />
@@ -288,6 +326,11 @@ Abbildung 3: Klassendiagramm
 Abbildung 4: Ablaufdiagram
 
 <img width="228" height="547" alt="image" src="https://github.com/user-attachments/assets/5a686c19-c385-48c6-a0a7-689a9b005a7d" />
+
+Abbildung 5: ERMdiagram
+
+<img width="436" height="299" alt="image" src="https://github.com/user-attachments/assets/0ad811f5-8a1e-4ed3-bf8f-5985e91db553" />
+
 
 
 ## 4 Realisieren
