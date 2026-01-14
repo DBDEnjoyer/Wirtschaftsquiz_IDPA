@@ -409,4 +409,22 @@ Während des Projekts haben wir gelernt, ein größeres Programm in mehrere Komp
 Die Arbeit im Team war wichtig, um verschiedene Blickwinkel einzubringen: Während ein Teil sich auf die Logik konzentrierte, arbeiteten andere an der Benutzeroberfläche und der Dokumentation. Dadurch konnten Probleme schneller erkannt und gelöst werden.
 
 
+### Anleitung zum Starten des Wirtschaftsquiz
 
+Laden Sie das Projekt vom GitHub-Repository herunter:
+https://github.com/DBDEnjoyer/Wirtschaftsquiz_IDPA
+
+Entpacken Sie das ZIP-Archiv oder klonen Sie das Repository.
+
+Öffnen Sie den Projektordner.
+
+Stellen Sie sicher, dass Python 3 installiert ist.
+
+Öffnen Sie ein Terminal (oder die Eingabeaufforderung) im Projektordner.
+
+Starten Sie das Programm mit folgendem Befehl:
+
+     python main.py
+
+
+Das Fenster des Wirtschaftsquiz öffnet sich automatisch und kann nun verwendet werden.
