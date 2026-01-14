@@ -55,6 +55,21 @@ Ein Quiz kann erstellt, gespeichert und an Lernende weitergegeben werden. Nach A
 | 4.1  | Lehrperson wählt „Frage löschen“ | Klick auf Bestätigen | Frage wird aus der Datenbank entfernt |
 | 5.1  | Lernender schließt das Quiz ab | Klick auf „Beenden“ | Ergebnis mit Punktzahl und Korrekturen wird angezeigt |
 
+### Testkonzept
+
+**Testumgebung**
+- Getestet auf Windows-PC mit Python 3.x
+- Einzelplatzbetrieb (kein Netzwerk, kein Server)
+
+**Testmethode**
+- Manuelle Tests anhand definierter Testfälle
+- Exploratives Testen bei der GUI-Bedienung
+
+**Nicht getestet**
+- Keine Tests auf mobilen Geräten
+- Keine Mehrbenutzer-Szenarien
+- Keine Performance- oder Netzwerktests
+
 ### 1.4 Wissensbeschaffung und Informationsquellen
 
 Für die Umsetzung des Wirtschaftsquiz-Projekts haben wir gezielt fachlich passende und projektbezogene Informationsquellen verwendet. Die Auswahl der Quellen erfolgte nach dem Kriterium, dass sie direkt zur Lösung unserer Aufgaben (GUI-Entwicklung, Datenhaltung, Quizlogik) beitragen.
