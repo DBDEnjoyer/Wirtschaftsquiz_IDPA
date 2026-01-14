@@ -78,7 +78,7 @@ Für die Umsetzung des Wirtschaftsquiz-Projekts haben wir gezielt fachlich passe
   Versionsverwaltung, Repository-Struktur, Dokumentation im Team
 
 - **Lehrmittel Wirtschaft (Schulunterlagen)**  
-  → Inhaltliche Grundlage für die Quizfragen (z. B. BIP, Angebot & Nachfrage, Staatseinnahmen)
+  Inhaltliche Grundlage für die Quizfragen (z. B. BIP, Angebot & Nachfrage, Staatseinnahmen)
 
 ---
 
@@ -117,6 +117,10 @@ Die Umsetzung ist im Code-Repository dokumentiert:
 | 6.A  | 13.01.2026 | Team      | Abschluss, finale Doku & Abgabe | 60’ |
 
 **Total:** ca. 12 Arbeitspakete ≈ 18 Stunden
+### Abbildung: Zeitplan
+
+<img width="1013" height="262" alt="image" src="https://github.com/user-attachments/assets/c38c4722-9cd5-4386-a22b-82fcbb0290ac" />
+
 
 ---
 ## 3 Entscheiden
