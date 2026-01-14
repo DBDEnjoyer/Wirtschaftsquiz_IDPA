@@ -55,6 +55,49 @@ Ein Quiz kann erstellt, gespeichert und an Lernende weitergegeben werden. Nach A
 | 4.1  | Lehrperson wählt „Frage löschen“ | Klick auf Bestätigen | Frage wird aus der Datenbank entfernt |
 | 5.1  | Lernender schließt das Quiz ab | Klick auf „Beenden“ | Ergebnis mit Punktzahl und Korrekturen wird angezeigt |
 
+### 1.4 Wissensbeschaffung und Informationsquellen
+
+Für die Umsetzung des Wirtschaftsquiz-Projekts haben wir gezielt fachlich passende und projektbezogene Informationsquellen verwendet. Die Auswahl der Quellen erfolgte nach dem Kriterium, dass sie direkt zur Lösung unserer Aufgaben (GUI-Entwicklung, Datenhaltung, Quizlogik) beitragen.
+
+**Verwendete Informationsquellen:**
+
+- **Python-Dokumentation**  
+  https://docs.python.org  
+  Grundlagen der Programmiersprache, Datentypen, Fehlerbehandlung
+
+- **Tkinter GUI-Dokumentation**  
+  https://docs.python.org/3/library/tkinter.html  
+  Aufbau von Fenstern, Buttons, Eingabefeldern und Layouts für die Quiz-Oberfläche
+
+- **JSON-Format (RFC 8259 / Python json-Modul)**  
+  https://docs.python.org/3/library/json.html  
+  Speicherung und Laden von Fragen, Themen und Quizzen
+
+- **GitHub Docs**  
+  https://docs.github.com  
+  Versionsverwaltung, Repository-Struktur, Dokumentation im Team
+
+- **Lehrmittel Wirtschaft (Schulunterlagen)**  
+  → Inhaltliche Grundlage für die Quizfragen (z. B. BIP, Angebot & Nachfrage, Staatseinnahmen)
+
+---
+
+### Nutzung der Quellen
+
+Aus diesen Quellen haben wir die für unser Projekt relevanten Informationen gezielt ausgewählt und angewendet, z. B.:
+
+- Verwendung von **tkinter-Widgets** (Buttons, Radiobuttons, Eingabefelder) für die Quiz-GUI  
+- Einsatz von **JSON-Dateien** zur Speicherung von Fragen, Themen und Lösungen  
+- Strukturierung des Programms mit **Klassen und Modulen** (Question, Quiz, QuizService, Storage)
+
+Die Informationen wurden nicht nur kopiert, sondern **auf unser eigenes Projekt übertragen**, indem wir sie an unsere Anforderungen (Multiple-Choice, Freitext, Auswertung, Fragenverwaltung) angepasst haben.
+
+---
+
+### Nachvollziehbarkeit
+
+Alle verwendeten Quellen sind öffentlich zugänglich und für Lehrpersonen sowie Projektbeteiligte jederzeit überprüfbar.  
+Die Umsetzung ist im Code-Repository dokumentiert:
 ---
 
 ## 2 Planen
