@@ -70,6 +70,17 @@ Ein Quiz kann erstellt, gespeichert und an Lernende weitergegeben werden. Nach A
 - Keine Mehrbenutzer-Szenarien
 - Keine Performance- oder Netzwerktests
 
+### Bewertung nach Leitfrage A14 (Testfälle)
+
+Das Wirtschaftsquiz wurde mit einem vollständigen Satz an funktionalen Testfällen getestet. 
+Alle Muss-User-Stories (Quiz starten, Fragen beantworten, Auswertung anzeigen, Fragen verwalten) 
+sind durch konkrete Testfälle mit erwarteten Ergebnissen abgedeckt.
+
+Als Testmethoden wurden manuelle Tests anhand der definierten Testfälle sowie exploratives Testen der GUI verwendet.
+
+Nicht abgedeckt sind automatisierte Unit-Tests, Performance- oder Netzwerktests. 
+Trotzdem decken die vorhandenen Testfälle die Benutzeranforderungen nahezu vollständig ab.
+
 ### 1.4 Wissensbeschaffung und Informationsquellen
 
 Für die Umsetzung des Wirtschaftsquiz-Projekts haben wir gezielt fachlich passende und projektbezogene Informationsquellen verwendet. Die Auswahl der Quellen erfolgte nach dem Kriterium, dass sie direkt zur Lösung unserer Aufgaben (GUI-Entwicklung, Datenhaltung, Quizlogik) beitragen.
