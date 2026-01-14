@@ -273,7 +273,7 @@ So wird die Anforderung „Quiz an Lernende weitergeben“ technisch sauber erf�
 
 ---
 
-### Design & Dokumentation
+### 3.5 Design & Dokumentation
 
 Das Design des Wirtschaftsquiz-Systems wurde mit geeigneten Mitteln dokumentiert und nachvollziehbar dargestellt.
 Zur Visualisierung der Benutzerführung wurde ein GUI-Mockup erstellt, welches die wichtigsten Ansichten (Startseite, Quiz, Lehrerbereich, Ergebnisanzeige) sowie die Navigation zwischen ihnen zeigt. Dieses Mockup ermöglicht es, den Ablauf der Anwendung unabhängig vom Code zu verstehen.
@@ -286,8 +286,29 @@ Auch ohne formales UML erfüllt die Dokumentation ihren Zweck, da:
 - die Verantwortlichkeiten der Klassen verständlich beschrieben sind,
 - und die Funktionsweise des Systems für Aussenstehende nachvollziehbar bleibt.
 
+### 3.6 Software-Architektur und Modularisierung
 
-### ERM / Datenmodell
+Das Wirtschaftsquiz wurde bewusst nach einer modularen, schichtenbasierten Architektur aufgebaut. Ziel war es, eine klare Trennung zwischen Daten, Geschäftslogik, Persistenz und Benutzeroberfläche zu erreichen, um Wartbarkeit, Testbarkeit und Erweiterbarkeit sicherzustellen.
+
+Die Anwendung ist in logisch getrennte Module unterteilt:
+
+- models.py enthält die reinen Datenstrukturen (Question, Quiz).
+Diese Klassen beschreiben nur die fachlichen Objekte und enthalten keine Logik zur Anzeige oder Speicherung.
+
+- services.py enthält die Geschäftslogik (QuizService).
+Diese Klasse steuert den Ablauf des Quiz, wertet Antworten aus und verwaltet den Fortschritt. Sie kennt weder GUI noch Speicherformat.
+
+- storage.py kapselt den Datenzugriff (JSONStorage).
+Alle Lade-, Speicher- und Zusammenstellungsfunktionen für Fragen und Quizze sind hier gebündelt. Dadurch kann die Speichertechnik später leicht ersetzt werden (z. B. durch Datenbank oder Cloud).
+
+- gui.py enthält ausschließlich die Benutzeroberfläche.
+Die GUI ruft nur klar definierte Methoden aus QuizService und JSONStorage auf, enthält aber keine Geschäftslogik.
+
+- main.py ist der Startpunkt und verbindet die Module.
+
+Diese Struktur folgt dem Prinzip der Separation of Concerns (Trennung der Verantwortlichkeiten). Jede Klasse hat eine klar definierte Aufgabe, und die Schnittstellen zwischen den Modulen sind einfach und eindeutig (z. B. submit_answer(), load(), add_question()).
+
+### 3.7 ERM / Datenmodell
 
 Für das Wirtschaftsquiz wurde ein vollständiges Datenmodell definiert, das sowohl die fachlichen Objekte als auch ihre Beziehungen abbildet.
 
