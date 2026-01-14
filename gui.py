@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from typing import List
-
+from tkinter import filedialog
+from models import Quiz
 from storage import JSONStorage
 from services import QuizService
 from models import Question
@@ -106,6 +107,28 @@ class QuizApp(tk.Tk):
 
     # ---------- Hilfsfunktionen ----------
 
+    def import_quiz_file(self):
+        path = filedialog.askopenfilename(
+            title="Quiz-Datei auswählen",
+            filetypes=[("Quiz JSON", "*.json"), ("Alle Dateien", "*.*")]
+        )
+        if not path:
+            return
+        try:
+            quiz = self.store.load_quiz_from_file(path)
+        except Exception as e:
+            messagebox.showerror("Fehler", f"Quiz konnte nicht geladen werden:\n{e}")
+            return
+
+        self.current_quiz_service = QuizService(quiz)
+        quiz_page: QuizPage = self.frames["QuizPage"]  # type: ignore
+        self.show_frame("QuizPage")
+        quiz_page.load_next_question()
+
+
+    # ----------  ----------
+
+
     def show_frame(self, name: str):
         frame = self.frames[name]
         frame.tkraise()
@@ -166,12 +189,19 @@ class StartPage(ttk.Frame):
         )
         quiz_btn.grid(row=0, column=0, padx=20, pady=(25, 10), sticky="ew")
 
+        load_btn = ttk.Button(
+            card,
+            text="Quiz laden (Datei)",
+            command=controller.import_quiz_file
+        )
+        load_btn.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
+
         manage_btn = ttk.Button(
             card,
             text="Fragen verwalten",
             command=lambda: controller.show_frame("ManageQuestionsPage")
         )
-        manage_btn.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
+        manage_btn.grid(row=2, column=0, padx=20, pady=10, sticky="ew")
 
         exit_btn = ttk.Button(
             card,
@@ -179,7 +209,7 @@ class StartPage(ttk.Frame):
             style="Danger.TButton",
             command=controller.destroy
         )
-        exit_btn.grid(row=2, column=0, padx=20, pady=(10, 25), sticky="ew")
+        exit_btn.grid(row=3, column=0, padx=20, pady=(10, 25), sticky="ew")
 
 
 # ---------- Themenauswahl ----------
@@ -435,47 +465,52 @@ class ResultPage(ttk.Frame):
         svc = self.controller.current_quiz_service
         if not svc:
             return
+
         res = svc.result()
-        total = res["total"]
-        correct = res["correct"]
+        total = res.get("total", 0)
+        correct = res.get("correct", 0)
+
         self.summary_lbl.config(
             text=f"Sie haben {correct} von {total} Fragen richtig beantwortet."
         )
 
         self.tree.delete(*self.tree.get_children())
 
-        solutions_by_id = {}
-        for s in res.get("solutions", []):
-            solutions_by_id[s["id"]] = s
+        questions_by_id = {q.id: q for q in svc.quiz.questions}
+        solutions_by_id = {s["id"]: s for s in res.get("solutions", [])} if isinstance(res.get("solutions"), list) else {}
 
-for a in res["answers"]:
-    qid = a["id"]
-    ok = a["ok"]
-    given = a["given"]
-    sol = solutions_by_id.get(qid)
+        for a in res.get("answers", []):
+            qid = a.get("id")
+            ok = a.get("ok", False)
+            given = a.get("given")
 
-    frage_text = sol["text"] if sol else qid
-    korrekt = "Ja" if ok else "Nein"
+            qobj = questions_by_id.get(qid)
+            sol = solutions_by_id.get(qid)
 
-    if sol and sol["type"] == "mc":
-        options = sol.get("options") or []
-        
-        correct_idx = sol["answer"]
-        correct_txt = options[correct_idx] if isinstance(correct_idx, int) and 0 <= correct_idx < len(options) else str(correct_idx)
-        
-        if isinstance(given, int) and 0 <= given < len(options):
-            given_txt = options[given]
-        else:
+            if qobj:
+                frage_text = qobj.text
+                qtype = qobj.type
+                options = qobj.options or []
+            elif sol:
+                frage_text = sol.get("text", qid)
+                qtype = sol.get("type")
+                options = sol.get("options") or []
+            else:
+                frage_text = qid
+                qtype = None
+                options = []
+
+            korrekt = "Ja" if ok else "Nein"
             given_txt = str(given)
-    elif sol and sol["type"] == "tf":
-        correct_txt = "Richtig" if sol["answer"] else "Falsch"
-        given_txt = "Richtig" if bool(given) else "Falsch"
-    else:  # Textfrage
-        correct_txt = str(sol["answer"]) if sol else ""
-        given_txt = str(given)
 
+            if qtype == "mc":
+                if isinstance(given, int) and 0 <= given < len(options):
+                    given_txt = options[given]
+            elif qtype == "tf":
+                given_txt = "Richtig" if bool(given) else "Falsch"
 
-    self.tree.insert("", "end", values=(frage_text, korrekt, given_txt))
+            self.tree.insert("", "end", values=(frage_text, korrekt, given_txt))
+
 
 
 # ---------- Fragenverwaltung ----------
@@ -516,6 +551,14 @@ class ManageQuestionsPage(ttk.Frame):
                              command=self.delete_selected)
         del_btn.pack(side="left", padx=(10, 0))
 
+        export_btn = ttk.Button(
+            btn_bar,
+            text="Quiz exportieren",
+            command=self.export_quiz
+        )
+        export_btn.pack(side="left", padx=(10, 0))
+
+
         self.tree = ttk.Treeview(
             card,
             columns=("id", "topic", "type", "text"),
@@ -535,11 +578,13 @@ class ManageQuestionsPage(ttk.Frame):
         self.refresh()
 
     def refresh(self):
+        if not hasattr(self, "tree") or not self.tree.winfo_exists():
+            return
         for item in self.tree.get_children():
             self.tree.delete(item)
         for q in self.controller.store.list_questions():
-            self.tree.insert("", "end", iid=q.id,
-                             values=(q.id, q.topic, q.type, q.text))
+            self.tree.insert("", "end", iid=q.id, values=(q.id, q.topic, q.type, q.text))
+
 
     def _get_selected_id(self) -> str | None:
         sel = self.tree.selection()
@@ -550,7 +595,8 @@ class ManageQuestionsPage(ttk.Frame):
 
     def add_question(self):
         QuestionDialog.create_new(self.controller, self)
-        self.refresh()
+        self.after(0, self.refresh)
+
 
     def edit_selected(self):
         qid = self._get_selected_id()
@@ -567,6 +613,104 @@ class ManageQuestionsPage(ttk.Frame):
             self.controller.store.delete_question(qid)
             self.refresh()
 
+    def export_quiz(self):
+        topics_all = self.controller.get_topics()
+        if not topics_all:
+            messagebox.showinfo("Hinweis", "Keine Themen vorhanden. Bitte zuerst Fragen anlegen.")
+            return
+
+        dlg = ExportQuizDialog(self, topics_all)
+        self.wait_window(dlg)
+
+        if not dlg.result:
+            return
+
+        title, topics = dlg.result
+
+        path = filedialog.asksaveasfilename(
+            title="Quiz exportieren",
+            defaultextension=".json",
+            filetypes=[("Quiz JSON", "*.json"), ("Alle Dateien", "*.*")],
+            initialfile=f"{title}.json",
+        )
+        if not path:
+            return
+
+        try:
+            quiz = self.controller.store.assemble_quiz_by_topics(title, topics, limit_per_topic=None)
+            # Optional: Lösungen beim Export ausblenden (besser für Tests)
+            try:
+                quiz.show_solutions = False
+            except Exception:
+                pass
+
+            self.controller.store.export_quiz_to_file(quiz, path)
+        except Exception as e:
+            messagebox.showerror("Fehler", f"Export fehlgeschlagen:\n{e}")
+            return
+
+        messagebox.showinfo("Erfolg", f"Quiz exportiert:\n{path}")
+
+# ---------- Quiz exportieren ----------
+
+class ExportQuizDialog(tk.Toplevel):
+    def __init__(self, parent, topics: List[str]):
+        super().__init__(parent)
+        self.title("Quiz exportieren")
+        self.resizable(False, False)
+        self.result = None
+
+        self.title_var = tk.StringVar(value="Wirtschaftsquiz")
+
+        frame = ttk.Frame(self, style="Card.TFrame")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
+
+        ttk.Label(frame, text="Quiz-Titel:").grid(row=0, column=0, sticky="w")
+        ttk.Entry(frame, textvariable=self.title_var, width=40).grid(row=0, column=1, sticky="we", pady=5)
+
+        ttk.Label(frame, text="Themen auswählen (mehrfach möglich):").grid(
+            row=1, column=0, columnspan=2, sticky="w", pady=(10, 5)
+        )
+
+        self.listbox = tk.Listbox(
+            frame,
+            selectmode="multiple",
+            activestyle="none",
+            bg="#1e1e1e",
+            fg="#f0f0f0",
+            highlightthickness=0,
+            relief="flat",
+            height=10,
+        )
+        self.listbox.grid(row=2, column=0, columnspan=2, sticky="we")
+
+        for t in topics:
+            self.listbox.insert(tk.END, t)
+
+        btns = ttk.Frame(frame, style="Card.TFrame")
+        btns.grid(row=3, column=0, columnspan=2, sticky="e", pady=(15, 0))
+
+        ttk.Button(btns, text="Abbrechen", command=self.destroy).pack(side="right")
+        ttk.Button(btns, text="OK", style="Accent.TButton", command=self._ok).pack(side="right", padx=(0, 8))
+
+        frame.columnconfigure(1, weight=1)
+        self.grab_set()
+        self.focus()
+
+    def _ok(self):
+        title = self.title_var.get().strip()
+        indices = self.listbox.curselection()
+        topics = [self.listbox.get(i) for i in indices]
+
+        if not title:
+            messagebox.showwarning("Hinweis", "Bitte einen Quiz-Titel eingeben.")
+            return
+        if not topics:
+            messagebox.showwarning("Hinweis", "Bitte mindestens ein Thema auswählen.")
+            return
+
+        self.result = (title, topics)
+        self.destroy()
 
 # ---------- Dialog zum Fragen bearbeiten ----------
 
@@ -669,32 +813,33 @@ class QuestionDialog(tk.Toplevel):
         answer = None
 
         try:
-       if qtype == "mc":
-    options = [o.strip() for o in options_text.split(";") if o.strip()]
-    if len(options) < 2:
-        raise ValueError("Für MC-Fragen sind mindestens 2 Optionen nötig.")
+            if qtype == "mc":
+                options = [o.strip() for o in options_text.split(";") if o.strip()]
+                if len(options) < 2:
+                    raise ValueError("Für MC-Fragen sind mindestens 2 Optionen nötig.")
 
-    
-    if answer_text.isdigit():
-        answer = int(answer_text)
-        if not (0 <= answer < len(options)):
-            raise ValueError("Antwortindex liegt außerhalb des gültigen Bereichs.")
-    else:
-        
-        try:
-            answer = options.index(answer_text.strip())
-        except ValueError:
-            raise ValueError("Die korrekte Antwort muss entweder ein gültiger Index "
-                             "oder exakt eine der angegebenen Optionen sein.")
+                if answer_text.isdigit():
+                    answer = int(answer_text)
+                    if not (0 <= answer < len(options)):
+                        raise ValueError("Antwortindex liegt außerhalb des gültigen Bereichs.")
+                else:
+                    if answer_text not in options:
+                        raise ValueError(
+                            "Die korrekte Antwort muss entweder ein gültiger Index "
+                            "oder exakt eine der angegebenen Optionen sein."
+                        )
+                    answer = options.index(answer_text)
 
             elif qtype == "tf":
                 if answer_text.lower() not in ("t", "f", "true", "false", "wahr", "falsch"):
                     raise ValueError("Für TF-Fragen bitte 't'/'f' oder 'true'/'false' angeben.")
                 answer = answer_text.lower() in ("t", "true", "wahr")
-                else:  # text
-        if not answer_text:
-            raise ValueError("Für Textfragen wird eine Musterlösung benötigt.")
-        answer = answer_text
+
+            else:  # text
+                if not answer_text:
+                    raise ValueError("Für Textfragen wird eine Musterlösung benötigt.")
+                answer = answer_text
+
         except ValueError as e:
             messagebox.showerror("Fehler", str(e))
             return
