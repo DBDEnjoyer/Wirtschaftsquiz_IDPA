@@ -100,6 +100,58 @@ Alle verwendeten Quellen sind öffentlich zugänglich und für Lehrpersonen sowi
 Die Umsetzung ist im Code-Repository dokumentiert:
 ---
 
+### 1.5 Systemgrenzen und Schnittstellen zur Aussenwelt
+
+Das Wirtschaftsquiz ist als **eigenständige Desktop-Anwendung** konzipiert.  
+Das System selbst umfasst die Benutzeroberfläche (GUI), die Quizlogik, die Auswertung sowie die Verwaltung der Fragen.
+
+Alles, was **nicht direkt Teil der Anwendung ist**, gehört zur Aussenwelt.
+
+---
+
+### Beteiligte Akteure (Aussenwelt)
+
+| Akteur | Rolle im System |
+|-------|----------------|
+| Lernende | Starten ein Quiz, beantworten Fragen und sehen ihr Ergebnis |
+| Lehrpersonen | Erstellen, bearbeiten und exportieren Quizze |
+| Betriebssystem | Startet das Programm und verwaltet Dateien |
+| Dateisystem | Speichert und lädt Quizdateien (JSON) |
+
+---
+
+### Systemgrenze
+
+Das System beginnt dort, wo die Anwendung startet (`main.py`) und endet dort, wo Dateien gespeichert oder geladen werden.
+
+Nicht Teil des Systems sind:
+- Das Betriebssystem (Windows, macOS, Linux)
+- Der Benutzer (Lehrperson oder Lernende)
+- Der Dateiaustausch (z. B. Weitergabe von Quizdateien per USB, Mail oder Teams)
+
+---
+
+### Schnittstellen
+
+| Schnittstelle | Richtung | Beschreibung |
+|--------------|--------|---------------|
+| GUI (Tkinter) | Benutzer → System | Eingabe von Antworten, Auswahl von Themen, Erstellen von Fragen |
+| GUI (Tkinter) | System → Benutzer | Anzeige von Fragen, Ergebnissen, Fehlermeldungen |
+| JSON-Dateien | System → Aussenwelt | Export von Quizzen durch Lehrpersonen |
+| JSON-Dateien | Aussenwelt → System | Import von Quizzen durch Lernende |
+| Dateisystem | System ↔ Betriebssystem | Lesen und Schreiben der Quizdateien |
+
+---
+
+### Einbettung in den Schulalltag
+
+Das System ist so gestaltet, dass Lehrpersonen Quizdateien erstellen und an Lernende weitergeben können, z. B.:
+- per USB-Stick  
+- per E-Mail  
+- über Teams oder Schulplattform  
+
+Die Lernenden laden diese Dateien in das Programm und bearbeiten genau dieses Quiz.  
+Dadurch ist das Quiz **nicht an einen einzelnen Computer gebunden**, sondern kann realistisch im Unterricht eingesetzt werden.
 ## 2 Planen
 
 | AP-№ | Frist      | Zuständig | Beschreibung | geplante Zeit |
